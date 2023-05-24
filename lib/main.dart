@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 
 // firebase
@@ -11,6 +10,7 @@ import 'package:firebase_core/firebase_core.dart';
 
 // firestore
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 // camera
 import 'package:camera/camera.dart';
@@ -54,6 +54,16 @@ class _FormScreenState extends State<FormScreen> {
   final _nameController = TextEditingController();
   final _phoneController = TextEditingController();
 
+  CollectionReference DadosSocorristas = FirebaseFirestore.instance.collection('DadosSocorristas');
+  Future<void> adicionarFormu(String nome, String phone) {
+    return DadosSocorristas
+        .add({
+      'nome': nome,
+      'phone': phone
+    }).then((value) => print("Ocorrência Criada"))
+        .catchError((error) => print("Erro ao adicionar os dados da ocorrência: $error"));
+  }
+
   @override
   void dispose() {
     _nameController.dispose();
@@ -72,7 +82,7 @@ class _FormScreenState extends State<FormScreen> {
         child: Form(
           key: _formKey,
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               TextFormField(
                 controller: _nameController,
@@ -88,6 +98,7 @@ class _FormScreenState extends State<FormScreen> {
               ),
               SizedBox(height: 16.0),
               TextFormField(
+                keyboardType: TextInputType.number,
                 controller: _phoneController,
                 decoration: InputDecoration(
                   labelText: 'Telefone',
@@ -101,10 +112,16 @@ class _FormScreenState extends State<FormScreen> {
               ),
               SizedBox(height: 16.0),
               ElevatedButton(
+                style: TextButton.styleFrom(
+                  backgroundColor: Colors.purple,
+                  elevation: 15,
+                  shadowColor: Colors.purple,
+                ),
                 onPressed: () => {
-
+                  adicionarFormu(_nameController.text, _phoneController.text)
+                  //Salva os dados do Socorrista na coleção DadosSocorrista
                 },
-                child: Text('Enviar'),
+                child: Text('Enviar Dados'),
               ),
             ],
           ),
@@ -220,6 +237,11 @@ class _HomePage extends State<HomePage> {
       ),
       body: Center(
         child: ElevatedButton(
+          style: TextButton.styleFrom(
+            backgroundColor: Colors.purple,
+            elevation: 15,
+            shadowColor: Colors.purple,
+          ),
           onPressed: () {
             // Lógica para o botão de emergência aqui
             Navigator.push(
