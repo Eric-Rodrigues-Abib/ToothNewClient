@@ -50,20 +50,20 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyBJeZmuS58-C7FHMW4gxxw5bfaFA7tXulY',
-    appId: '1:384202854328:android:d60d20f65fef8ab92ec94d',
-    messagingSenderId: '384202854328',
-    projectId: 'toothnow-2023',
-    storageBucket: 'toothnow-2023.appspot.com',
+    apiKey: 'AIzaSyBh0qmEAVJjN8TK9sBrO870A2se_s30DpE',
+    appId: '1:16737573043:android:7453c3f40a641689c7b8c6',
+    messagingSenderId: '16737573043',
+    projectId: 'authentication-d4f1b',
+    storageBucket: 'authentication-d4f1b.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyDvzHbDSCjJhVhNILB77z4gUDhmb8w1xQc',
-    appId: '1:384202854328:ios:61f36ba7fc0235e72ec94d',
-    messagingSenderId: '384202854328',
-    projectId: 'toothnow-2023',
-    storageBucket: 'toothnow-2023.appspot.com',
-    iosClientId: '384202854328-s2cpn9ub8enp2d28g3k9f8ia1so3jgs7.apps.googleusercontent.com',
+    apiKey: 'AIzaSyAyQYhm726u2e0rD-w5TSNBUW88Gng5BS4',
+    appId: '1:16737573043:ios:dffe4adc3a3646f0c7b8c6',
+    messagingSenderId: '16737573043',
+    projectId: 'authentication-d4f1b',
+    storageBucket: 'authentication-d4f1b.appspot.com',
+    iosClientId: '16737573043-tdtfmj5ekaqnnjni345t9iee0qtj7ee0.apps.googleusercontent.com',
     iosBundleId: 'com.toothnow.toothapp.toothnowPacient',
   );
 }

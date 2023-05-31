@@ -1,34 +1,41 @@
 {
   "project_info": {
-    "project_number": "384202854328",
-    "project_id": "toothnow-2023",
-    "storage_bucket": "toothnow-2023.appspot.com"
+    "project_number": "16737573043",
+    "project_id": "authentication-d4f1b",
+    "storage_bucket": "authentication-d4f1b.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:384202854328:android:6361b270743cad2a2ec94d",
+        "mobilesdk_app_id": "1:16737573043:android:202f3311c54fe2a4c7b8c6",
         "android_client_info": {
-          "package_name": "br.edu.puc.toothnow"
+          "package_name": "br.pro.mateus.authnotify"
         }
       },
       "oauth_client": [
         {
-          "client_id": "384202854328-i9hjn9uf37ejk96ohtdhrdphl23qe3og.apps.googleusercontent.com",
+          "client_id": "16737573043-24mdah54nmhuo53f0ju91r4ai9mc1hdc.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBJeZmuS58-C7FHMW4gxxw5bfaFA7tXulY"
+          "current_key": "AIzaSyBh0qmEAVJjN8TK9sBrO870A2se_s30DpE"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "384202854328-i9hjn9uf37ejk96ohtdhrdphl23qe3og.apps.googleusercontent.com",
+              "client_id": "16737573043-24mdah54nmhuo53f0ju91r4ai9mc1hdc.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "16737573043-tdtfmj5ekaqnnjni345t9iee0qtj7ee0.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.toothnow.toothapp.toothnowPacient"
+              }
             }
           ]
         }
@@ -36,28 +43,35 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:384202854328:android:d60d20f65fef8ab92ec94d",
+        "mobilesdk_app_id": "1:16737573043:android:7453c3f40a641689c7b8c6",
         "android_client_info": {
           "package_name": "com.toothnow.toothapp.toothnow_pacient"
         }
       },
       "oauth_client": [
         {
-          "client_id": "384202854328-i9hjn9uf37ejk96ohtdhrdphl23qe3og.apps.googleusercontent.com",
+          "client_id": "16737573043-24mdah54nmhuo53f0ju91r4ai9mc1hdc.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBJeZmuS58-C7FHMW4gxxw5bfaFA7tXulY"
+          "current_key": "AIzaSyBh0qmEAVJjN8TK9sBrO870A2se_s30DpE"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "384202854328-i9hjn9uf37ejk96ohtdhrdphl23qe3og.apps.googleusercontent.com",
+              "client_id": "16737573043-24mdah54nmhuo53f0ju91r4ai9mc1hdc.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "16737573043-tdtfmj5ekaqnnjni345t9iee0qtj7ee0.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.toothnow.toothapp.toothnowPacient"
+              }
             }
           ]
         }

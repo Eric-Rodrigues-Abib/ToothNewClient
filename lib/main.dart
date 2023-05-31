@@ -117,8 +117,11 @@ class _FormScreenState extends State<FormScreen> {
                   shadowColor: Colors.purple,
                 ),
                 onPressed: () => {
-                  adicionarFormu(_nameController.text, _phoneController.text)
                   //Salva os dados do Socorrista na coleção DadosSocorrista
+                  adicionarFormu(_nameController.text, _phoneController.text),
+                  Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ListDentist()))
                 },
                 child: Text('Enviar Dados'),
               ),
@@ -218,6 +221,63 @@ class _CameraScreenState extends State<CameraScreen> {
     );
   }
 }
+
+class ListDentist extends StatefulWidget {
+  const ListDentist({Key? key}) : super(key: key);
+
+  @override
+  State<ListDentist> createState() => _ListDentistState();
+}
+
+class _ListDentistState extends State<ListDentist> {
+
+
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      child: Scaffold(
+        body: StreamBuilder(
+          //Aqui ta aparecendo todos os dentistas presentes na coleção
+          //Tem que fazer aparecer apenas os dentistas que aceitarem a notifcação da ocorrência
+          stream: FirebaseFirestore.instance.collection('users').snapshots(),
+          builder: (BuildContext context,
+              AsyncSnapshot<QuerySnapshot> snapshot) {
+            if (!snapshot.hasData) {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+            return ListView(
+              children: snapshot.data!.docs.map((documents) {
+                return ListTile(
+                  leading: Icon(Icons.person),
+                  title : Text(documents['nome']),
+                    subtitle: Row(
+                      children:
+                      [Text(documents['telefone']),
+                        Spacer(),
+                        ElevatedButton(
+                            child: Text('Aceitar'),
+                            onPressed: (/*Adicionar aqui a lógica ao aceitar o dentista */) {},
+                            style: TextButton.styleFrom(
+                                    backgroundColor: Colors.green,
+                                    elevation: 15,
+                                    shadowColor: Colors.lightGreen,
+
+                        ),
+                        )
+                      ],
+                    ),
+                );
+              }).toList(),
+            );
+          },
+        ),
+      ),
+    );
+  }
+}
+
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
