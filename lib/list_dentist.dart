@@ -38,8 +38,7 @@ class _ListDentistState extends State<ListDentist> {
                         onPressed: (/*Adicionar aqui a lógica ao aceitar o dentista */) {},
                         style: TextButton.styleFrom(
                           backgroundColor: Colors.green,
-                          elevation: 15,
-                          shadowColor: Colors.lightGreen,
+                          elevation: 15
 
                         ),
                       )
