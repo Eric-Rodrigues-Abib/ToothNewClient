@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'list_dentist.dart';
 
 
@@ -14,14 +15,19 @@ class _FormScreenState extends State<FormScreen> {
   final _phoneController = TextEditingController();
 
   CollectionReference DadosSocorristas = FirebaseFirestore.instance.collection('DadosSocorristas');
-  Future<void> adicionarFormu(String nome, String phone) {
+  Future<void> adicionarFormu(String nome, String phone)  async {
+    FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
+    final String? fcmToken = await _firebaseMessaging.getToken();
     return DadosSocorristas
         .add({
       'nome': nome,
-      'phone': phone
+      'phone': phone,
+      'FmcToken': fcmToken
     }).then((value) => print("Ocorrência Criada"))
         .catchError((error) => print("Erro ao adicionar os dados da ocorrência: $error"));
   }
+
+
 
   @override
   void dispose() {
@@ -77,6 +83,7 @@ class _FormScreenState extends State<FormScreen> {
                   shadowColor: Colors.purple,
                 ),
                 onPressed: () => {
+
                   //Salva os dados do Socorrista na coleção DadosSocorrista
                   adicionarFormu(_nameController.text, _phoneController.text),
                   Navigator.push(
