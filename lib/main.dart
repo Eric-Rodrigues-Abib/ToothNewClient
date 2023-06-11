@@ -1,4 +1,8 @@
+import 'dart:convert';
 import 'dart:io';
+
+import 'package:cloud_functions/cloud_functions.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 
 //arquivos .dart
@@ -14,14 +18,10 @@ import 'package:firebase_core/firebase_core.dart';
 // firestore
 import 'package:firebase_storage/firebase_storage.dart';
 
-
 // camera
 import 'package:camera/camera.dart';
 
 List<CameraDescription> cameras = [];
-
-
-
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -32,6 +32,7 @@ void main() async {
   cameras = await availableCameras();
   runApp(const MyApp());
 }
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -48,9 +49,6 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-
-
 
 // A screen that allows users to take a picture using a given camera.
 class TakePictureScreen extends StatefulWidget {
@@ -147,8 +145,6 @@ class TakePictureScreenState extends State<TakePictureScreen> {
   }
 }
 
-
-
 // A widget that displays the picture taken by the user.
 class DisplayPictureScreen extends StatelessWidget {
   final String imagePath;
@@ -183,81 +179,102 @@ Future<void> _takePicture() async {
       TaskSnapshot taskSnapshot = await uploadTask;
 
       String downloadUrl = await taskSnapshot.ref.getDownloadURL();
-      return downloadUrl;
+      String? token = await FirebaseMessaging.instance.getToken();
+
+      final result =
+          await FirebaseFunctions.instanceFor(region: "southamerica-east1")
+              .httpsCallable("SetDadosSocorristas")
+              .call(({
+                "nome": "teste",
+                "telefone": "199",
+                "fcmToken": token,
+                "descricao": "teste descricao",
+                "foto": downloadUrl,
+                "status": "new"
+              }));
+
+      String response = result.data as String;
+      print("Response: $response");
+      Map<dynamic, dynamic> userData = json.decode(response);
+
+      print("userData: $userData");
     } catch (e) {
       print(e.toString());
-      return null;
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        /*appBar: AppBar(title: const Text('Visualize a foto')),
+      /*appBar: AppBar(title: const Text('Visualize a foto')),
         // The image is stored as a file on the device. Use the `Image.file`
         // constructor with the given path to display the image. */
-        body: Row(
-          children: [
-            Expanded(child: Stack(
-              children: [
-                Positioned.fill(child: Image.file(File(imagePath),fit: BoxFit.cover),),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Align(
-                      alignment: Alignment.bottomCenter,
-                      child: Padding(
+      body: Row(
+        children: [
+          Expanded(
+              child: Stack(
+            children: [
+              Positioned.fill(
+                child: Image.file(File(imagePath), fit: BoxFit.cover),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Padding(
                         padding: EdgeInsets.all(32),
-                          child: CircleAvatar(
-                            radius: 32,
-                            backgroundColor: Colors.purple.withOpacity(0.5),
-                            child:  IconButton(
-                                  icon: Icon(
-                                      Icons.check,
-                                      color: Colors.white,
-                                      size: 30,
-                                    ),
-                              // Provide an onPressed callback.
-                              onPressed: () async {
-                                uploadFile(File(imagePath));
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(builder: (context) => FormScreen()));
-                              },
-                            ) ,
-                          )
-                      ),
-                    ),
-                    Align(
-                      alignment: Alignment.bottomCenter,
-                      child: Padding(
-                          padding: EdgeInsets.all(32),
-                          child: CircleAvatar(
-                            radius: 32,
-                            backgroundColor: Colors.purple.withOpacity(0.5),
-                            child:  IconButton(
-                              icon: Icon(
-                                Icons.close,
-                                color: Colors.white,
-                                size: 30,
-                              ),
-                              // Provide an onPressed callback.
-                              onPressed: () async {
-                                final firstCamera = cameras.first;
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(builder: (context) => TakePictureScreen(camera: firstCamera)));
-                              },
-                            ) ,
-                          )
-                      ),
-                    )
-                  ],
-                )
-              ],
-            ))
-          ],
-        ),
+                        child: CircleAvatar(
+                          radius: 32,
+                          backgroundColor: Colors.purple.withOpacity(0.5),
+                          child: IconButton(
+                            icon: Icon(
+                              Icons.check,
+                              color: Colors.white,
+                              size: 30,
+                            ),
+                            // Provide an onPressed callback.
+                            onPressed: () async {
+                              uploadFile(File(imagePath));
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => FormScreen()));
+                            },
+                          ),
+                        )),
+                  ),
+                  Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Padding(
+                        padding: EdgeInsets.all(32),
+                        child: CircleAvatar(
+                          radius: 32,
+                          backgroundColor: Colors.purple.withOpacity(0.5),
+                          child: IconButton(
+                            icon: Icon(
+                              Icons.close,
+                              color: Colors.white,
+                              size: 30,
+                            ),
+                            // Provide an onPressed callback.
+                            onPressed: () async {
+                              final firstCamera = cameras.first;
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => TakePictureScreen(
+                                          camera: firstCamera)));
+                            },
+                          ),
+                        )),
+                  )
+                ],
+              )
+            ],
+          ))
+        ],
+      ),
     );
   }
 }
@@ -268,10 +285,8 @@ class HomePage extends StatefulWidget {
   @override
   _HomePage createState() => _HomePage();
 }
+
 class _HomePage extends State<HomePage> {
-
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -293,12 +308,12 @@ class _HomePage extends State<HomePage> {
             // Lógica para o botão de emergência aqui
             Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => TakePictureScreen(
-                  // Pass the appropriate camera to the TakePictureScreen widget.
-                  camera: firstCamera,
-                ),
-                )
-            );
+                MaterialPageRoute(
+                  builder: (context) => TakePictureScreen(
+                    // Pass the appropriate camera to the TakePictureScreen widget.
+                    camera: firstCamera,
+                  ),
+                ));
           },
           child: const Text(
             'Criar ocorrência',
