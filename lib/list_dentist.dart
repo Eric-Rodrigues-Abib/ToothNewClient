@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import 'dentist_timer.dart';
+
 class ListDentist extends StatefulWidget {
   const ListDentist({Key? key}) : super(key: key);
 
@@ -35,11 +37,14 @@ class _ListDentistState extends State<ListDentist> {
                       Spacer(),
                       ElevatedButton(
                         child: Text('Aceitar'),
-                        onPressed: (/*Adicionar aqui a lógica ao aceitar o dentista */) {},
+                        onPressed: (/*Adicionar aqui a lógica ao aceitar o dentista */) {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => TimerScreen()));
+                        },
                         style: TextButton.styleFrom(
                           backgroundColor: Colors.green,
                           elevation: 15
-
                         ),
                       )
                     ],
