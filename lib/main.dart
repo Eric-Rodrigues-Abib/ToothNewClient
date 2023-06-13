@@ -188,16 +188,14 @@ Future<void> _takePicture() async {
                 "nome": "teste",
                 "telefone": "199",
                 "fcmToken": token,
-                "descricao": "teste descricao",
-                "foto": downloadUrl,
-                "status": "new"
+                "foto": downloadUrl
               }));
 
       String response = result.data as String;
-      print("Response: $response");
       Map<dynamic, dynamic> userData = json.decode(response);
+      Map<dynamic, dynamic> userPayload = json.decode(userData['payload']);
 
-      print("userData: $userData");
+      return userPayload['docId'] as String;
     } catch (e) {
       print(e.toString());
     }
@@ -235,11 +233,12 @@ Future<void> _takePicture() async {
                             ),
                             // Provide an onPressed callback.
                             onPressed: () async {
-                              uploadFile(File(imagePath));
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => FormScreen()));
+                              uploadFile(File(imagePath)).then((value) => {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => FormScreen()))
+                                  });
                             },
                           ),
                         )),
