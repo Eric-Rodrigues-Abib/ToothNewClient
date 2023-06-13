@@ -179,23 +179,7 @@ Future<void> _takePicture() async {
       TaskSnapshot taskSnapshot = await uploadTask;
 
       String downloadUrl = await taskSnapshot.ref.getDownloadURL();
-      String? token = await FirebaseMessaging.instance.getToken();
-
-      final result =
-          await FirebaseFunctions.instanceFor(region: "southamerica-east1")
-              .httpsCallable("SetDadosSocorristas")
-              .call(({
-                "nome": "teste",
-                "telefone": "199",
-                "fcmToken": token,
-                "foto": downloadUrl
-              }));
-
-      String response = result.data as String;
-      Map<dynamic, dynamic> userData = json.decode(response);
-      Map<dynamic, dynamic> userPayload = json.decode(userData['payload']);
-
-      return userPayload['docId'] as String;
+      return downloadUrl;
     } catch (e) {
       print(e.toString());
     }
@@ -234,10 +218,11 @@ Future<void> _takePicture() async {
                             // Provide an onPressed callback.
                             onPressed: () async {
                               uploadFile(File(imagePath)).then((value) => {
+                                print(value),
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                            builder: (context) => FormScreen()))
+                                            builder: (context) => FormScreen(imageUrl: value)))
                                   });
                             },
                           ),

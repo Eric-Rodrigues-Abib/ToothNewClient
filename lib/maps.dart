@@ -9,7 +9,8 @@ class LocalizacaoAtual extends StatefulWidget {
 
 class _LocalizacaoAtualState extends State<LocalizacaoAtual> {
   late GoogleMapController _mapController;
-  late LatLng _currentPosition;
+  LatLng _currentPosition = LatLng(0, 0);
+  bool _isLoading = true;
 
   @override
   void initState() {
@@ -22,13 +23,20 @@ class _LocalizacaoAtualState extends State<LocalizacaoAtual> {
   }
 
   Future<void> _getCurrentLocation() async {
-    final Position position = await Geolocator.getCurrentPosition(
+    final Position? position = await Geolocator.getCurrentPosition(
       desiredAccuracy: LocationAccuracy.high,
     );
 
-    setState(() {
-      _currentPosition = LatLng(position.latitude, position.longitude);
-    });
+    if (position != null) {
+      setState(() {
+        _currentPosition = LatLng(position.latitude, position.longitude);
+        _isLoading = false;
+      });
+    } else {
+      setState(() {
+        _isLoading = false;
+      });
+    }
   }
 
   @override
@@ -37,7 +45,11 @@ class _LocalizacaoAtualState extends State<LocalizacaoAtual> {
       appBar: AppBar(
         title: Text('Localização Atual'),
       ),
-      body: _currentPosition != null ? GoogleMap(
+      body: _isLoading
+          ? Center(
+        child: CircularProgressIndicator(),
+      )
+          : GoogleMap(
         onMapCreated: _onMapCreated,
         initialCameraPosition: CameraPosition(
           target: _currentPosition,
@@ -49,8 +61,6 @@ class _LocalizacaoAtualState extends State<LocalizacaoAtual> {
             position: _currentPosition,
           ),
         },
-      ):  Center(
-        child: CircularProgressIndicator(),
       ),
     );
   }
