@@ -3,8 +3,7 @@ import 'dart:convert';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'list_dentist.dart';
-
+import 'timer_anterior.dart';
 
 class FormScreen extends StatefulWidget {
  final String? imageUrl;
@@ -110,7 +109,7 @@ class _FormScreenState extends State<FormScreen> {
                     print(value),
                     Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => ListDentist()))
+                        MaterialPageRoute(builder: (context) => TimerScreen(emergenciaId: value)))
                   }),
                 },
                 child: Text('Enviar Dados',

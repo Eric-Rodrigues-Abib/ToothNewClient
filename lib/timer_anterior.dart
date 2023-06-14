@@ -8,6 +8,10 @@ import 'maps.dart';
 import 'rating.dart';
 
 class TimerScreen extends StatefulWidget {
+  final String? emergenciaId;
+
+  TimerScreen({required this.emergenciaId});
+
   @override
   _TimerScreenState createState() => _TimerScreenState();
 }
@@ -35,7 +39,7 @@ class _TimerScreenState extends State<TimerScreen> {
           timer.cancel();
 
           Navigator.push(
-              context, MaterialPageRoute(builder: (context) => LocalizacaoAtual()));
+              context, MaterialPageRoute(builder: (context) => ListDentist(emergenciaId: widget.emergenciaId)));
           // remover da lista do firebase
         } else {
           secondsRemaining--;
@@ -71,23 +75,10 @@ class _TimerScreenState extends State<TimerScreen> {
               style: TextStyle(fontSize: 48),
             ),
             SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () async {
-                final bool = await requestPermission();
-                if (bool.isGranted) {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => LocalizacaoAtual()));
-                }},
-              child: Text('Enviar localização'),
-            ),
-            SizedBox(height: 10),
-            ElevatedButton(
-              onPressed: () {
-                // Lógica do segundo botão
-              },
-              child: Text('Receber localização'),
-            ),
+            Text(
+              "Aguardando dentistas da região",
+              style: TextStyle(fontSize: 51)
+            )
           ],
         ),
       ),

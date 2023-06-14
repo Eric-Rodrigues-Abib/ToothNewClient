@@ -4,7 +4,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dentist_timer.dart';
 
 class ListDentist extends StatefulWidget {
-  const ListDentist({Key? key}) : super(key: key);
+  final String? emergenciaId;
+  const ListDentist({required this.emergenciaId});
 
   @override
   State<ListDentist> createState() => _ListDentistState();
@@ -12,13 +13,15 @@ class ListDentist extends StatefulWidget {
 
 class _ListDentistState extends State<ListDentist> {
 
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         body: StreamBuilder(
-          stream: FirebaseFirestore.instance.collection('users').snapshots(),
+          stream: FirebaseFirestore.instance.collection('ResultadoEmergencias')
+              .where("status", isEqualTo: "true")
+              .where("emergenciaID", isEqualTo: widget.emergenciaId)
+              .snapshots(),
           builder: (BuildContext context,
               AsyncSnapshot<QuerySnapshot> snapshot) {
             if (!snapshot.hasData) {
