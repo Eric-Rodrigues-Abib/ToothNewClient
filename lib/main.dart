@@ -76,7 +76,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
       // Get a specific camera from the list of available cameras.
       widget.camera,
       // Define the resolution to use.
-      ResolutionPreset.medium,
+      ResolutionPreset.high,
     );
 
     // Next, initialize the controller. This returns a Future.
@@ -109,7 +109,17 @@ class TakePictureScreenState extends State<TakePictureScreen> {
           }
         },
       ),
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: ElevatedButton(
+        style: TextButton.styleFrom(
+            minimumSize: Size(380, 50),
+            backgroundColor: Colors.purple,
+            elevation: 0,
+            shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(50),
+                )
+            )
+        ),
         // Provide an onPressed callback.
         onPressed: () async {
           // Take the Picture in a try / catch block. If anything goes wrong,
@@ -151,24 +161,6 @@ class DisplayPictureScreen extends StatelessWidget {
 
   const DisplayPictureScreen({super.key, required this.imagePath});
 
-  /*
-Future<void> _takePicture() async {
-  await _controller;
-
-  final image = await _controller.takePicture();
-  image.saveTo('images');
-
-  String? downloadUrl = await uploadFile(File(image.path));
-  print(downloadUrl);
-
-  if (downloadUrl != null) {
-    print('Salvo com sucesso.');
-  } else {
-    print('Falha ao salvar o arquivo');
-  }
-}
-
-*/
 
   Future<String?> uploadFile(File file) async {
     FirebaseStorage storage = FirebaseStorage.instance;
@@ -274,37 +266,52 @@ class _HomePage extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Criar ocorrência'),
-      ),
-      body: Center(
-        child: ElevatedButton(
-          style: TextButton.styleFrom(
-            backgroundColor: Colors.purple,
-            elevation: 15,
-            shadowColor: Colors.purple,
-          ),
-          onPressed: () async {
-            // Obtain a list of the available cameras on the device.
-            final cameras = await availableCameras();
-            // Get a specific camera from the list of available cameras.
-            final firstCamera = cameras.first;
-            // Lógica para o botão de emergência aqui
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => TakePictureScreen(
-                    // Pass the appropriate camera to the TakePictureScreen widget.
-                    camera: firstCamera,
+      appBar: null,
+      body:Center(
+        child: Column(
+            mainAxisAlignment: MainAxisAlignment.center, // (optional) will center horizontally.
+            children: [
+              Image.asset('assets/images/ToothNow_logo.png',
+                width: 350,
+                height: 350,),
+              ElevatedButton(
+                style: TextButton.styleFrom(
+                  minimumSize: Size(327, 50),
+                  backgroundColor: Colors.purple,
+                  elevation: 0,
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(50),
+                    )
+                  )
+                ),
+                onPressed: () async {
+                  // Obtain a list of the available cameras on the device.
+                  final cameras = await availableCameras();
+                  // Get a specific camera from the list of available cameras.
+                  final firstCamera = cameras.first;
+                  // Lógica para o botão de emergência aqui
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => TakePictureScreen(
+                          // Pass the appropriate camera to the TakePictureScreen widget.
+                          camera: firstCamera,
+                        ),
+                      ));
+                },
+                child: const Text(
+                  'Criar ocorrência',
+                  style: TextStyle(
+                      fontSize: 20,
+                      fontFamily: 'InterFonte',
+                      fontWeight: FontWeight.w500,
                   ),
-                ));
-          },
-          child: const Text(
-            'Criar ocorrência',
-            style: TextStyle(fontSize: 20),
-          ),
-        ),
-      ),
+                ),
+              )
+            ]
+        )
+      )
     );
   }
 }

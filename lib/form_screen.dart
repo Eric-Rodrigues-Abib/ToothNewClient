@@ -54,16 +54,18 @@ class _FormScreenState extends State<FormScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
+      appBar: null /*AppBar(
         title: Text('Formulário da ocorrência'),
-      ),
+      )*/,
       body: Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.only(left:20, bottom:25, right: 20, top: 55),
         child: Form(
           key: _formKey,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
+              Text('Preencha o Formulário de identificação abaixo', style: TextStyle(
+                  fontFamily: 'InterFonte',fontWeight: FontWeight.w600,fontSize: 30, color: Colors.purple)),
               TextFormField(
                 controller: _nameController,
                 decoration: InputDecoration(
@@ -93,9 +95,14 @@ class _FormScreenState extends State<FormScreen> {
               SizedBox(height: 16.0),
               ElevatedButton(
                 style: TextButton.styleFrom(
-                  backgroundColor: Colors.purple,
-                  elevation: 15,
-                  shadowColor: Colors.purple,
+                    minimumSize: Size(327, 50),
+                    backgroundColor: Colors.purple,
+                    elevation: 0,
+                    shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(50),
+                        )
+                    )
                 ),
                 onPressed: () => {
                   //Salva os dados do Socorrista na coleção DadosSocorrista
@@ -106,7 +113,12 @@ class _FormScreenState extends State<FormScreen> {
                         MaterialPageRoute(builder: (context) => ListDentist()))
                   }),
                 },
-                child: Text('Enviar Dados'),
+                child: Text('Enviar Dados',
+                  style: TextStyle(
+                    fontFamily: 'InterFonte',
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
               ),
             ],
           ),

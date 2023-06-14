@@ -36,15 +36,25 @@ class _ListDentistState extends State<ListDentist> {
                     [Text(documents['telefone']),
                       Spacer(),
                       ElevatedButton(
-                        child: Text('Aceitar'),
+                        child: Text('Aceitar',
+                          style: TextStyle(
+                            fontFamily: 'InterFonte',
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
                         onPressed: (/*Adicionar aqui a lógica ao aceitar o dentista */) {
                           Navigator.push(
                               context,
                               MaterialPageRoute(builder: (context) => TimerScreen()));
                         },
                         style: TextButton.styleFrom(
-                          backgroundColor: Colors.green,
-                          elevation: 15
+                            backgroundColor: Colors.purple,
+                            elevation: 0,
+                            shape: const RoundedRectangleBorder(
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(50),
+                                )
+                            )
                         ),
                       )
                     ],
