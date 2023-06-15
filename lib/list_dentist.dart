@@ -19,8 +19,8 @@ class _ListDentistState extends State<ListDentist> {
       child: Scaffold(
         body: StreamBuilder(
           stream: FirebaseFirestore.instance.collection('ResultadoEmergencias')
-              .where("status", isEqualTo: "true")
               .where("emergenciaID", isEqualTo: widget.emergenciaId)
+              .where("status", isEqualTo: true)
               .snapshots(),
           builder: (BuildContext context,
               AsyncSnapshot<QuerySnapshot> snapshot) {

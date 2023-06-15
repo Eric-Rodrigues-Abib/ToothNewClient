@@ -36,10 +36,12 @@ class _TimerScreenState extends State<TimerScreen> {
     timer = Timer.periodic(Duration(seconds: 1), (Timer timer) {
       setState(() {
         if (secondsRemaining < 1) {
-          timer.cancel();
-
           Navigator.push(
               context, MaterialPageRoute(builder: (context) => ListDentist(emergenciaId: widget.emergenciaId)));
+          timer.cancel();
+
+          print(widget.emergenciaId);
+
           // remover da lista do firebase
         } else {
           secondsRemaining--;
