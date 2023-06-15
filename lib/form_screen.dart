@@ -63,7 +63,7 @@ class _FormScreenState extends State<FormScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              Text('Preencha o Formulário de identificação abaixo', style: TextStyle(
+              Text('Preencha o Formulário de Identificação abaixo', style: TextStyle(
                   fontFamily: 'InterFonte',fontWeight: FontWeight.w600,fontSize: 30, color: Colors.purple)),
               TextFormField(
                 controller: _nameController,
