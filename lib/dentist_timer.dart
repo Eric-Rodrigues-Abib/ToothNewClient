@@ -7,12 +7,15 @@ import 'package:permission_handler/permission_handler.dart';
 import 'maps.dart';
 import 'rating.dart';
 
-class TimerScreen extends StatefulWidget {
+class TimerScreenDentist  extends StatefulWidget {
+  final String? emergenciaId;
+  TimerScreenDentist({required this.emergenciaId});
+
   @override
   _TimerScreenState createState() => _TimerScreenState();
 }
 
-class _TimerScreenState extends State<TimerScreen> {
+class _TimerScreenState extends State<TimerScreenDentist> {
   int secondsRemaining = 90;
   Timer? timer;
 
@@ -35,7 +38,7 @@ class _TimerScreenState extends State<TimerScreen> {
           timer.cancel();
 
           Navigator.push(
-              context, MaterialPageRoute(builder: (context) => LocalizacaoAtual()));
+              context, MaterialPageRoute(builder: (context) => LocalizacaoAtual(emergenciaId: widget.emergenciaId)));
           // remover da lista do firebase
         } else {
           secondsRemaining--;
@@ -59,34 +62,64 @@ class _TimerScreenState extends State<TimerScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Timer'),
-      ),
+      appBar: null,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
               getTimerText(),
-              style: TextStyle(fontSize: 48),
+              style: TextStyle(
+                  fontSize: 48,
+                  fontFamily: 'InterFonte',
+                  fontWeight: FontWeight.w900),
             ),
             SizedBox(height: 20),
             ElevatedButton(
+              style: TextButton.styleFrom(
+                  minimumSize: Size(327, 50),
+                  backgroundColor: Colors.purple,
+                  elevation: 0,
+                  shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(50),
+                      )
+                  )
+              ),
               onPressed: () async {
                 final bool = await requestPermission();
                 if (bool.isGranted) {
                   Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => LocalizacaoAtual()));
+                      MaterialPageRoute(builder: (context) => LocalizacaoAtual(emergenciaId: widget.emergenciaId)));
                 }},
-              child: Text('Enviar localização'),
+              child: Text('Enviar localização',
+                style: TextStyle(
+                  fontFamily: 'InterFonte',
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
             ),
-            SizedBox(height: 10),
+            SizedBox(height: 15),
             ElevatedButton(
+              style: TextButton.styleFrom(
+                  minimumSize: Size(327, 50),
+                  backgroundColor: Colors.purple,
+                  elevation: 0,
+                  shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(50),
+                      )
+                  )
+              ),
               onPressed: () {
-                // Lógica do segundo botão
+                // Lógica do segundo botão da localização pegando a latitude e longitude do firebase
               },
-              child: Text('Receber localização'),
+              child: Text('Receber localização',
+                style: TextStyle(
+                  fontFamily: 'InterFonte',
+                  fontWeight: FontWeight.w600,
+                ),),
             ),
           ],
         ),

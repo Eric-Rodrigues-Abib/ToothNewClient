@@ -6,6 +6,7 @@ import 'package:permission_handler/permission_handler.dart';
 
 import 'maps.dart';
 import 'rating.dart';
+import 'dentist_timer.dart';
 
 class TimerScreen extends StatefulWidget {
   final String? emergenciaId;
@@ -63,21 +64,27 @@ class _TimerScreenState extends State<TimerScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Timer'),
-      ),
-      body: Center(
+      appBar: null,
+      body: Padding(
+        padding: const EdgeInsets.only(left:20, right: 20, top: 55),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              getTimerText(),
-              style: TextStyle(fontSize: 48),
+                "Aguardando os Dentistas da região",
+                style: TextStyle(
+                    fontSize: 30,
+                    fontFamily: 'InterFonte',
+                    fontWeight: FontWeight.w500,
+                    color: Colors.purple)
             ),
-            SizedBox(height: 20),
+            SizedBox(height: 40),
             Text(
-              "Aguardando dentistas da região",
-              style: TextStyle(fontSize: 51)
+              getTimerText(),
+              style: TextStyle(
+                fontSize: 48,
+                fontFamily: 'InterFonte',
+                fontWeight: FontWeight.w900),
             )
           ],
         ),

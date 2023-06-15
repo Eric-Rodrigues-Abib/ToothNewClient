@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
+import 'consultaAndamento_page.dart';
 
 class LocalizacaoAtual extends StatefulWidget {
+  final String? emergenciaId;
+  LocalizacaoAtual({required this.emergenciaId});
+
   @override
   _LocalizacaoAtualState createState() => _LocalizacaoAtualState();
 }
@@ -43,7 +47,10 @@ class _LocalizacaoAtualState extends State<LocalizacaoAtual> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Localização Atual'),
+        title: Text('Sua Localização Atual',
+          style: TextStyle(
+              fontFamily: 'InterFonte',
+              fontWeight: FontWeight.w500),),
       ),
       body: _isLoading
           ? Center(
@@ -61,6 +68,21 @@ class _LocalizacaoAtualState extends State<LocalizacaoAtual> {
             position: _currentPosition,
           ),
         },
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {
+          /*Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) =>TelaConsultaAndamento(emergenciaId: widget.emergenciaId)));*/
+        },
+        backgroundColor: Colors.purple,
+        elevation: 0,
+        label: Text('Prosseguir',
+          style: TextStyle(
+            fontFamily: 'InterFonte',
+            fontWeight: FontWeight.w500,
+          ),
+        ),
       ),
     );
   }

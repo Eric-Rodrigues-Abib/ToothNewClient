@@ -48,7 +48,7 @@ class _ListDentistState extends State<ListDentist> {
                         onPressed: (/*Adicionar aqui a lógica ao aceitar o dentista */) {
                           Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => TimerScreen()));
+                              MaterialPageRoute(builder: (context) => TimerScreenDentist(emergenciaId: widget.emergenciaId)));
                         },
                         style: TextButton.styleFrom(
                             backgroundColor: Colors.purple,
